@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Overview</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            background-color: #35424a;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            margin-top: 0;
+        }
+        .task {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .task:last-child {
+            border-bottom: none;
+        }
+        .submit-task {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+        .submit-task input[type="file"] {
+            margin-bottom: 10px;
+        }
+        .submit-task button {
+            padding: 10px;
+            background-color: #35424a;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .submit-task button:hover {
+            background-color: #4e5b61;
+        }
+        .message {
+            margin: 10px 0;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Task Overview</h1>
+</header>
+
+<div class="container">
+    <h2>Available Tasks</h2>
+    <div id="task-list">
+        <!-- Task items will be dynamically added here -->
+    </div>
+
+    <div class="submit-task">
+        <h2>Submit Completed Task</h2>
+        <input type="file" id="task-file" accept=".pdf">
+        <button id="submit-task-btn">Submit Task</button>
+        <div class="message" id="submission-message"></div>
+    </div>
+</div>
+
+<script>
+    // Sample tasks (In a real app, you would fetch this from the server)
+    const tasks = [
+        { id: 1, title: 'Math Homework', description: 'Complete exercises from chapter 5.', dueDate: '2024-10-30' },
+        { id: 2, title: 'Science Project', description: 'Prepare a project on renewable energy.', dueDate: '2024-11-05' }
+    ];
+
+    // Function to display tasks
+    function displayTasks() {
+        const taskList = document.getElementById('task-list');
+        taskList.innerHTML = ''; // Clear previous tasks
+
+        tasks.forEach(task => {
+            const taskDiv = document.createElement('div');
+            taskDiv.className = 'task';
+            taskDiv.innerHTML = `
+                <h3>${task.title}</h3>
+                <p>${task.description}</p>
+                <p><strong>Due Date:</strong> ${task.dueDate}</p>
+            `;
+            taskList.appendChild(taskDiv);
+        });
+    }
+
+    // Function to handle task submission
+    document.getElementById('submit-task-btn').addEventListener('click', () => {
+        const fileInput = document.getElementById('task-file');
+        const messageDiv = document.getElementById('submission-message');
+        
+        if (fileInput.files.length === 0) {
+            messageDiv.textContent = 'Please select a PDF file to submit.';
+            messageDiv.style.color = 'red';
+            return;
+        }
+        
+        // Here you would typically send the file to the server
+        // For demonstration, we will just show a success message
+        messageDiv.textContent = 'Task submitted successfully!';
+        messageDiv.style.color = 'green';
+
+        // Clear the file input for future submissions
+        fileInput.value = '';
+    });
+
+    // Initial display of tasks
+    displayTasks();
+</script>
+
+</body>
+</html>
